@@ -103,7 +103,7 @@ jobs:
           restore-keys: |
             macos-ccache-
       - name: install homebrew
-        run: sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
       - name: install dependencies
         run: sudo brew install automake berkeley-db4 libtool boost miniupnpc openssl pkg-config protobuf python3 qt libevent librsvg
       - name: autogen
