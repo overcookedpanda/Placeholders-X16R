@@ -105,13 +105,13 @@ jobs:
       - name: install homebrew
         run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
       - name: install dependencies
-        run: brew install automake berkeley-db4 libtool boost miniupnpc openssl pkg-config protobuf python3 qt libevent librsvg ccache
+        run: brew install automake berkeley-db4 libtool boost miniupnpc openssl pkg-config protobuf python3 libevent librsvg ccache
       - name: autogen
         run: ./autogen.sh
       - name: configure
-        run: ./configure --disable-bench
+        run: ./configure --disable-bench --without-gui
       - name: make
-        run: make
+        run: make -j2
       - name: make check
         run: make check
       - name: make deploy
