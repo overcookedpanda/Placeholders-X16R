@@ -40,6 +40,15 @@ jobs:
         run: ./configure --disable-bench
       - name: make
         run: make -j$(nproc)
+      - name: Post status to Discord
+        uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          job: linux build
+          description: native ubuntu 18.04 build
+          nofail: false
 
   x86_64-w64-mingw32:
     runs-on: ubuntu-latest
@@ -84,6 +93,15 @@ jobs:
         run: CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/ --disable-bench
       - name: make
         run: make -j$(nproc)
+      - name: Post status to Discord
+        uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          job: win64 build
+          description: mingw32 x86_64 windows build
+          nofail: false
 
   macos:
     runs-on: macos-latest
@@ -112,3 +130,12 @@ jobs:
         run: ./configure --disable-bench --without-gui
       - name: make
         run: make -j2
+      - name: Post status to Discord
+        uses: sarisia/actions-status-discord@v1
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          job: macos build
+          description: native mac osx build
+          nofail: false
