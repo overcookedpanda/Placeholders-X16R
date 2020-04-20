@@ -134,6 +134,7 @@ jobs:
         uses: sarisia/actions-status-discord@v1
         if: always()
         with:
+          # test webhook
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
           job: macos build
