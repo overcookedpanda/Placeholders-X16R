@@ -40,18 +40,6 @@ jobs:
         run: ./configure --disable-bench
       - name: make
         run: make -j$(nproc)
-      - name: Send Webhook Notification
-        if: always()
-        env:
-          JOB_STATUS: ${{ job.status }}
-          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
-          HOOK_OS_NAME: ${{ runner.os }}
-          WORKFLOW_NAME: ${{ github.workflow }}
-        run: |
-          echo Status: $JOB_STATUS
-          git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
-          bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
-        shell: bash
 
   x86_64-w64-mingw32:
     runs-on: ubuntu-latest
@@ -96,18 +84,6 @@ jobs:
         run: CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/ --disable-bench
       - name: make
         run: make -j$(nproc)
-      - name: Send Webhook Notification
-        if: always()
-        env:
-          JOB_STATUS: ${{ job.status }}
-          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
-          HOOK_OS_NAME: ${HOST}
-          WORKFLOW_NAME: ${{ github.workflow }}
-        run: |
-          echo Status: $JOB_STATUS
-          git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
-          bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
-        shell: bash
 
   macos:
     runs-on: macos-latest
@@ -136,15 +112,3 @@ jobs:
         run: ./configure --disable-bench --without-gui
       - name: make
         run: make -j2
-      - name: Send Webhook Notification
-        if: always()
-        env:
-          JOB_STATUS: ${{ job.status }}
-          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK }}
-          HOOK_OS_NAME: ${{ runner.os }}
-          WORKFLOW_NAME: ${{ github.workflow }}
-        run: |
-          echo Status: $JOB_STATUS
-          git clone https://github.com/DiscordHooks/github-actions-discord-webhook.git webhook
-          bash webhook/send.sh $JOB_STATUS $WEBHOOK_URL
-        shell: bash
