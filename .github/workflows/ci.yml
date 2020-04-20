@@ -112,5 +112,3 @@ jobs:
         run: ./configure --disable-bench --without-gui
       - name: make
         run: make -j2
-      - name: make deploy
-        run: make deploy
